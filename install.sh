@@ -9,7 +9,7 @@
 ###############################################################################
 
 # List of files/folders to be symlinked.
-files="zshrc vimrc vim conkyrc conky"
+files="zshrc dunstrc vimrc vim conkyrc conky"
 
 dir=~/dotfiles
 
