@@ -4,22 +4,12 @@
 " Using VIM, not VI
 set nocompatible
 
-" Set up Vundle
-filetype off
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+" Set up Pathogen
+" git submodule init && git submodule update
+runtime bundle/vim-pathogen/autoload/pathogen.vim
+call pathogen#infect()
 
-" Bundles to use. Run :BundleInstall after updating.
-Bundle 'gmarik/vundle'
-Bundle 'flazz/vim-colorschemes'
-Bundle 'tpope/vim-rails'
-Bundle 'davidhalter/jedi-vim'
-Bundle 'othree/html5.vim'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'xuhdev/vim-latex-live-preview'
-Bundle 'armyofevilrobots/vim-openscad'
-Bundle 'gerw/vim-latex-suite'
-
+" Bundle 'flazz/vim-colorschemes'
 filetype plugin indent on
 
 " Use UTF-8 encoding
@@ -88,12 +78,13 @@ colorscheme lucius
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-    set guioptions-=T       " Hide the toolbar
-    set guioptions+=e       " Ensure the tab bar is displayed by the GUI
-    set showtabline=2       " Always show the tab bar
-    set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
-    set lines=40 columns=85 " Enlarge the default GUI window
-    set guifont="Inconsolata"
+  set guioptions-=T       " Hide the toolbar
+  set guioptions-=m       " Hide the menubar
+  set guioptions+=e       " Ensure the tab bar is displayed by the GUI
+  set showtabline=2       " Always show the tab bar
+  set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
+  set lines=40 columns=85 " Enlarge the default GUI window
+  set guifont=Inconsolata\ Medium\ 12
 endif
 
 " Use 256 colours in the console.
@@ -111,7 +102,7 @@ set expandtab
 " Use tabs intelligently
 set smarttab
 
-" One tab is equal to 4 spaces
+" One tab is equal to 2 spaces
 set shiftwidth=2
 set tabstop=2
 
@@ -131,6 +122,9 @@ set nobackup
 set nowb
 
 
-autocmd Filetype tex setl updatetime=1
-let g:livepreview_previewer = 'evince'
-autocmd Filetype tex nmap <F12> ::LLPStartPreview<cr>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugins                                                                     "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let delimitMate_expand_cr = 1
+
+noremap <leader>o <Esc>:CommandT<CR>
