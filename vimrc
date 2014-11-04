@@ -127,3 +127,7 @@ set nowb
 let delimitMate_expand_cr = 1
 
 noremap <leader>o <Esc>:CommandT<CR>
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
