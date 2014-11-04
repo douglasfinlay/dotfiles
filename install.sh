@@ -1,12 +1,15 @@
 #!/bin/bash
 
-###############################################################################
-# install.sh
-# Creates symlinks from the home directory to the desired dotfiles.
-#
-# TODO - script creates $backupdir even if it won't be used. Don't create this
-#        unnecessarily.
-###############################################################################
+################################################################################
+# install.sh                                                                   #
+#                                                                              #
+# Created by Douglas Finay (douglas@douglasfinlay.com)                         #
+#                                                                              #
+# Creates symlinks from the home directory to the desired dotfiles.            #
+#                                                                              #
+# TODO - script creates $backupdir even if it won't be used. Don't create this #
+#        unnecessarily.                                                        #
+################################################################################
 
 # List of files/folders to be symlinked.
 files="zshrc dunstrc vimrc vim conkyrc conky"
@@ -30,3 +33,13 @@ for file in $files; do
     echo "Creating symlink for $file."
     ln -s $dir/$file ~/.$file
 done
+
+################################################################################
+# Specific Commands                                                            #
+################################################################################
+git submodule init && git submodule update
+
+# Vim (command-t)
+pushd vim/bundle/command-t/ruby/command-t
+ruby extconf.rb && make
+popd
