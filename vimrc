@@ -9,7 +9,6 @@ set nocompatible
 runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
-" Bundle 'flazz/vim-colorschemes'
 filetype plugin indent on
 
 " Use UTF-8 encoding
@@ -74,17 +73,17 @@ noremap <Right> <NOP>
 syntax on
 
 " Set the colour scheme
-colorscheme lucius
+colorscheme mustang
 
 " Set extra options when running in GUI mode
 if has("gui_running")
-  set guioptions-=T       " Hide the toolbar
-  set guioptions-=m       " Hide the menubar
-  set guioptions+=e       " Ensure the tab bar is displayed by the GUI
-  set showtabline=2       " Always show the tab bar
-  set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
-  set lines=40 columns=85 " Enlarge the default GUI window
-  set guifont=Inconsolata\ Medium\ 12
+    set guioptions-=T       " Hide the toolbar
+    set guioptions-=m       " Hide the menubar
+    set guioptions+=e       " Ensure the tab bar is displayed by the GUI
+    set showtabline=2       " Always show the tab bar
+    set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
+    set lines=40 columns=85 " Enlarge the default GUI window
+    set guifont=Inconsolata\ Medium\ 12
 endif
 
 " Use 256 colours in the console.
@@ -102,9 +101,9 @@ set expandtab
 " Use tabs intelligently
 set smarttab
 
-" One tab is equal to 2 spaces
-set shiftwidth=2
-set tabstop=2
+" One tab is equal to 4 spaces
+set shiftwidth=4
+set tabstop=4
 
 " Automatically indent
 set autoindent
