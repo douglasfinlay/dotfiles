@@ -1,45 +1,44 @@
 #!/bin/bash
 
 ################################################################################
-# install.sh                                                                   #
+# File:    install.sh                                                          #
+# Author:  Douglas Finlay (douglas@douglasfinlay.com)                          #
 #                                                                              #
-# Created by Douglas Finay (douglas@douglasfinlay.com)                         #
-#                                                                              #
-# Creates symlinks from the home directory to the desired dotfiles.            #
-#                                                                              #
-# TODO - script creates $backupdir even if it won't be used. Don't create this #
-#        unnecessarily.                                                        #
+# Symlinks the desired dotfiles to the home directory. Updates git submodules. #
 ################################################################################
 
-# List of files/folders to be symlinked.
+# Add files to be symlinked here.
 files="zshrc dunstrc vimrc vim conkyrc conky"
 
 dir=~/dotfiles
 
-# Directory to backup any existing dotfiles that will be replaced.
-backupdir=~/dotfiles_old
 
-# Create backup directory.
-echo "Creating directory to backup any existing dotfiles..."
-mkdir -p $backupdir
-echo "Done."
-
-# Create a backup of existing dotfiles, then create symlinks.
-for file in $files; do
-    if [ -f ~/.$file ]; then
-        echo "$file exists in home directory. Moving to $backupdir."
-        mv ~/.$file $backupdir
-    fi
-    echo "Creating symlink for $file."
-    ln -s $dir/$file ~/.$file
-done
-
-################################################################################
-# Specific Commands                                                            #
-################################################################################
-git submodule init && git submodule update
-
+function post_install {
 # Vim (command-t)
 pushd vim/bundle/command-t/ruby/command-t
 ruby extconf.rb && make
 popd
+}
+
+function create_symlinks {
+for file in $files;
+do
+    # Force creation of symlinks
+    ln -sf $dir/$file ~/.$file && echo "Created symlink for ~/.$file"
+done
+}
+
+while true; do
+    read -p "Existing dotfiles will be overwritten WITHOUT creating a backup. Continue? (Y/N) " c
+    case $c in
+        [Yy]* ) create_symlinks
+            echo -e "\nUpdating Git submodules"
+            git submodule init && git submodule update
+            echo -e "\nRunning post-install commands"
+            post_install
+            break;;
+        [Nn]* ) exit;;
+    * ) echo "Please enter Y or N";;
+esac
+done
+
