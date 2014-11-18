@@ -22,3 +22,6 @@
 [submodule "vim/bundle/indentLine"]
 	path = vim/bundle/indentLine
 	url = git://github.com/Yggdroot/indentLine.git
+[submodule "vim/bundle/clang_complete"]
+	path = vim/bundle/clang_complete
+	url = https://github.com/Rip-Rip/clang_complete.git
