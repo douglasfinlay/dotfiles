@@ -25,3 +25,6 @@
 [submodule "vim/bundle/clang_complete"]
 	path = vim/bundle/clang_complete
 	url = https://github.com/Rip-Rip/clang_complete.git
+[submodule "vim/bundle/vim-latex-live-preview"]
+	path = vim/bundle/vim-latex-live-preview
+	url = https://github.com/xuhdev/vim-latex-live-preview

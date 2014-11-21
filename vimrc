@@ -122,6 +122,15 @@ set nowb
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" File-specific                                                               "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Update quicker when working with *.tex files (so the live preview works well
+" with vim-latex-live-preview
+autocmd BufEnter * set updatetime=4000  " default time
+autocmd BufEnter *.tex set updatetime=1000
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins                                                                     "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let delimitMate_expand_cr = 1
@@ -133,3 +142,6 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 let g:indentLine_char='┆'
+
+" vim-latex-live-preview
+let g:livepreview_previewer="evince"
