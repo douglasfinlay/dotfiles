@@ -19,6 +19,12 @@ set termencoding=utf-8
 " Automatically read when a file is changed from the outside
 set autoread
 
+" Force VIM to source .vimrc files from the current directory if they exist
+set exrc
+
+" Restrict commands in non-default .vimrc files
+set secure
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " VIM UI                                                                      "
@@ -64,6 +70,9 @@ noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
+
+" Do not show the autocomplete preview window
+set completeopt-=preview
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -145,3 +154,4 @@ let g:indentLine_char='┆'
 
 " vim-latex-live-preview
 let g:livepreview_previewer="evince"
+

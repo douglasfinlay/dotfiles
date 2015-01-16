@@ -11,7 +11,7 @@ autoload -U compinit promptinit
 compinit
 promptinit
 
-alias ls='ls -lAh --color=auto'
+alias ls='ls -a --color=auto'
 
 path=(/home/dougfinl/.gem/ruby/2.1.0/bin $path)
 
