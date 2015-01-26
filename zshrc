@@ -3,7 +3,7 @@ HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 unsetopt autocd
-bindkey -e
+bindkey -v
 
 zstyle :compinstall filename '/home/dougfinl/.zshrc'
 
