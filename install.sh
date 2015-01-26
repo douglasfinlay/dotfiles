@@ -8,7 +8,7 @@
 ################################################################################
 
 # Add files to be symlinked here.
-files="zshrc dunstrc vimrc vim conkyrc conky"
+files="zshrc zshenv dunstrc vimrc vim conkyrc conky"
 
 dir=~/dotfiles
 
