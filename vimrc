@@ -138,6 +138,13 @@ set nowb
 autocmd BufEnter * set updatetime=4000  " default time
 autocmd BufEnter *.tex set updatetime=1000
 
+autocmd BufEnter *.txt SetTxtOptions()
+
+function SetTxtOptions()
+  set sw=2
+  set ts=2
+endfunction
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins                                                                     "
