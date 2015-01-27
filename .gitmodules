@@ -31,3 +31,9 @@
 [submodule "vim/bundle/a"]
 	path = vim/bundle/a
 	url = https://github.com/vim-scripts/a.vim
+[submodule "vim/bundle/vim-markdown"]
+	path = vim/bundle/vim-markdown
+	url = https://github.com/plasticboy/vim-markdown
+[submodule "vim/bundle/tabular"]
+	path = vim/bundle/tabular
+	url = https://github.com/godlygeek/tabular
