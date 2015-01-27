@@ -13,7 +13,7 @@ promptinit
 
 alias ls='ls -A --color=auto'
 
-path=(/home/dougfinl/.gem/ruby/2.1.0/bin $path)
+path=(/usr/local/heroku/bin /home/dougfinl/.gem/ruby/2.1.0/bin $path)
 
 prompt redhat
 
@@ -88,3 +88,8 @@ git_prompt_string() {
 RPS1='$(git_prompt_string)'
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# RVM completion
+[[ -r "$HOME/.rvm/scripts/completion" ]] && . "$HOME/.rvm/scripts/completion"
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
