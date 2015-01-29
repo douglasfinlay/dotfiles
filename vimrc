@@ -4,6 +4,8 @@
 " Using VIM, not VI
 set nocompatible
 
+set re=1
+
 " Set up Pathogen
 " git submodule init && git submodule update
 runtime bundle/vim-pathogen/autoload/pathogen.vim
