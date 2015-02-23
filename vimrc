@@ -62,7 +62,7 @@ set number
 set relativenumber
 
 " Display the line number column with a nicer width
-set numberwidth=5
+
 
 " Disable arrow keys to break bad habits!
 noremap <Up> <NOP>
@@ -91,7 +91,7 @@ if has("gui_running")
     set showtabline=2       " Always show the tab bar
     set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
     set lines=40 columns=85 " Enlarge the default GUI window
-    set guifont=Inconsolata\ Medium\ 11
+    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
 endif
 
 " Use 256 colours in the console.
@@ -120,6 +120,9 @@ set smartindent
 
 " Wrap lines
 set wrap
+
+" Automatic formatting options
+set formatoptions=tcq2
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -161,3 +164,7 @@ let g:indentLine_char='┆'
 " vim-latex-live-preview
 let g:livepreview_previewer="evince"
 
+" airline
+set laststatus=2
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#tabline#fnamemod=":t"

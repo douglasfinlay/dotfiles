@@ -9,7 +9,7 @@
 ################################################################################
 
 # Add files to be symlinked here
-files="zshrc zshenv dunstrc vimrc vim conkyrc conky"
+files="dunstrc vimrc vim conkyrc conky gitconfig"
 
 dir=~/dotfiles
 
