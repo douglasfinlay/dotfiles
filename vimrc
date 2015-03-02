@@ -91,7 +91,7 @@ if has("gui_running")
     set showtabline=2       " Always show the tab bar
     set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
     set lines=40 columns=85 " Enlarge the default GUI window
-    set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 11
+    set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 11
 endif
 
 " Use 256 colours in the console.
