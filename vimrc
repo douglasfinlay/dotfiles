@@ -37,9 +37,6 @@ set wildignore=*.o,*.class,*.pyc
 " Show the ruler
 set ruler
 
-" Set command bar height to 2
-set cmdheight=2
-
 " Ignore case when searching
 set ignorecase
 
@@ -51,9 +48,6 @@ set incsearch
 
 " Show matching brackets
 set showmatch
-
-" Show the vertical guide at 80 chars
-set colorcolumn=80
 
 " Show line numbers
 set number
@@ -85,6 +79,7 @@ colorscheme mustang
 
 " Set extra options when running in GUI mode
 if has("gui_running")
+    colorscheme monokai
     set guioptions-=T       " Hide the toolbar
     set guioptions-=m       " Hide the menubar
     set guioptions+=e       " Ensure the tab bar is displayed by the GUI

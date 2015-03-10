@@ -15,10 +15,7 @@ dir=~/dotfiles
 
 
 function post_install {
-# Vim (command-t)
-pushd vim/bundle/command-t/ruby/command-t
-ruby extconf.rb && make
-popd
+:
 }
 
 function create_symlinks {
