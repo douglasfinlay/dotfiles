@@ -57,11 +57,14 @@ set number
 set relativenumber
 
 " Disable arrow keys to break bad habits!
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
+map <Up> <NOP>
+map <Down> <NOP>
+map <Left> <NOP>
+map <Right> <NOP>
+imap <Up> <NOP>
+imap <Down> <NOP>
+imap <Left> <NOP>
+imap <Right> <NOP>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colours & Fonts                                                             "
@@ -70,7 +73,8 @@ noremap <Right> <NOP>
 syntax on
 
 " Set the colour scheme
-colorscheme monokai
+colorscheme solarized
+set background=dark
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -108,6 +112,9 @@ set smartindent
 
 " Wrap long lines
 set wrap
+
+" Visual guide at 80 cols
+set cc=80
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
