@@ -9,7 +9,7 @@
 ################################################################################
 
 # Add files to be symlinked here
-files="dunstrc vimrc vim conkyrc conky gitconfig"
+files="dunstrc vimrc vim conkyrc conky gitconfig tmux.conf"
 
 dir=~/dotfiles
 
