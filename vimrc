@@ -84,7 +84,7 @@ if has("gui_running")
     set showtabline=2       " Always show the tab bar
     set guitablabel=%m\ %t  " Tab labels are \"[modified?] name\"
     set lines=40 columns=85 " Enlarge the default GUI window
-    set guifont=Inconsolata-g\ for\ Powerline\ Medium\ 11
+    set guifont=Hack\ 12
 endif
 
 " Use 256 colours in the console.
@@ -147,19 +147,18 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " Character for displaying indents
 let g:indentLine_char='┆'
 
-" vim-latex-live-preview
 let g:livepreview_previewer="evince"
+let g:tex_conceal=""
 
 " airline
-set laststatus=2
-let g:airline_powerline_fonts=1
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#tabline#fnamemod=":t"
+" set laststatus=2
+" let g:airline_powerline_fonts=1
+" let g:airline#extensions#tabline#enabled=1
+" let g:airline#extensions#tabline#fnamemod=":t"
 
 " ctrl-p
 let g:ctrlp_switch_buffer=0
 let g:ctrlp_working_path_mode=0
-
 
 " gitgutter / svngutter
 highlight clear SignColumn  " [git/svn]gutter bg the same as line numbers bg
