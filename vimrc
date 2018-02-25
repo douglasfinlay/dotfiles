@@ -37,7 +37,8 @@ Plug 'vim-syntastic/syntastic'
 " Auto-close braces, etc
 Plug 'jiangmiao/auto-pairs'
 
-Plug 'altercation/vim-colors-solarized'
+" Colorscheme
+Plug 'morhetz/gruvbox'
 
 " Visually indicate indentation
 Plug 'Yggdroot/indentLine'
@@ -106,6 +107,7 @@ imap <Down> <NOP>
 imap <Left> <NOP>
 imap <Right> <NOP>
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Colours & Fonts                                                             "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -113,7 +115,7 @@ imap <Right> <NOP>
 syntax on
 
 " Set the colour scheme
-colorscheme solarized
+colorscheme gruvbox
 set background=dark
 
 " Set extra options when running in GUI mode
@@ -173,4 +175,12 @@ autocmd FileType text,ruby,html,javascript setl ts=2 sts=2 sw=2
 
 " Enable spellchecking for text-based files
 autocmd FileType text,gitcommit,mkd, setlocal spell spelllang=en_gb
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Neovim                                                                      "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+    let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+endif
 
