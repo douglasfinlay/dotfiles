@@ -4,10 +4,6 @@
 " Using VIM, not VI
 set nocompatible
 
-" Set up Pathogen plugin manager
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-
 " Enable filetype-specific plugins and indentation
 filetype plugin indent on
 
@@ -24,6 +20,50 @@ set exrc
 
 " Restrict commands in non-default .vimrc files
 set secure
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin Manager                                                              "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call plug#begin('~/.vim/plugged')
+
+" File fuzzy finder
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" Syntax checking
+Plug 'vim-syntastic/syntastic'
+
+" Auto-close braces, etc
+Plug 'jiangmiao/auto-pairs'
+
+Plug 'altercation/vim-colors-solarized'
+
+" Visually indicate indentation
+Plug 'Yggdroot/indentLine'
+
+" Version control diff gutter
+Plug 'mhinz/vim-signify'
+
+" Fast alteration of quotes, etc
+Plug 'tpope/vim-surround'
+
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+call plug#end()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin Configuration                                                        "
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" Character for displaying indents
+let g:indentLine_char='┆'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -134,31 +174,3 @@ autocmd FileType text,ruby,html,javascript setl ts=2 sts=2 sw=2
 " Enable spellchecking for text-based files
 autocmd FileType text,gitcommit,mkd, setlocal spell spelllang=en_gb
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugins                                                                     "
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let delimitMate_expand_cr = 1
-
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" Character for displaying indents
-let g:indentLine_char='┆'
-
-let g:livepreview_previewer="evince"
-let g:tex_conceal=""
-
-" airline
-" set laststatus=2
-" let g:airline_powerline_fonts=1
-" let g:airline#extensions#tabline#enabled=1
-" let g:airline#extensions#tabline#fnamemod=":t"
-
-" ctrl-p
-let g:ctrlp_switch_buffer=0
-let g:ctrlp_working_path_mode=0
-
-" gitgutter / svngutter
-highlight clear SignColumn  " [git/svn]gutter bg the same as line numbers bg
