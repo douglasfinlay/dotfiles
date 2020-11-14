@@ -1,3 +1,5 @@
 [user]
-	email = douglas@douglasfinlay.com
 	name = Douglas Finlay
+	email = douglas@douglasfinlay.com
+[init]
+	defaultBranch = main
