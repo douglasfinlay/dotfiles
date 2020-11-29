@@ -39,7 +39,6 @@ call plug#end()
 " Colors
 set termguicolors
 colorscheme dracula
-set background=dark
 
 " Line numbering
 set number
