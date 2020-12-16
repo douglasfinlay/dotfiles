@@ -1,52 +1,58 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins                                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.local/share/nvim/plugged')
+if has('win32')
+    call plug#begin('~/AppData/Local/nvim/plugged')
+else
+    call plug#begin('~/.local/share/nvim/plugged')
+endif
 
-" Color scheme
+" UI
 Plug 'dracula/vim'
-
-" Airline
 Plug 'vim-airline/vim-airline'
-
-" Visualise indentation
 Plug 'Yggdroot/indentLine'
 
-" Version control status in gutter
+" Session saving (for tmux)
+Plug 'tpope/vim-obsession'
+
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+
+" VCS
 Plug 'mhinz/vim-signify'
 
-" Linting / syntax checking
-Plug 'dense-analysis/ale'
-
-" Easy commenting
+" Editing
 Plug 'tpope/vim-commentary'
-
-" Surround
 Plug 'tpope/vim-surround'
 
-" Intellisense
+" Code completion
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
-" Golang
+" Distraction-free editing
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
+" Markdown
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', {
+            \ 'do': { -> mkdp#util#install() },
+            \ 'for': ['markdown', 'vim-plug']
+            \ }
+
+" Languages
 Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
+Plug 'rust-lang/rust.vim'
 
 call plug#end()
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" User Interface                                                               "
+" General                                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colors
-set termguicolors
-colorscheme dracula
-set background=dark
-
-" Line numbering
-set number
-set ruler
-
-" Always show the sign column
-set signcolumn=yes
+set encoding=utf-8
+set fileencoding=utf-8
 
 " Disable creation of backup/swap files
 set nobackup
@@ -56,6 +62,30 @@ set nowritebackup
 " Automatically read changes to files
 set autoread
 
+" Set the leader to <space>
+let mapleader=' '
+
+set updatetime=300
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" User Interface                                                               "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Colors
+syntax on
+set termguicolors
+colorscheme dracula
+
+" Highlight the current line
+set cursorline
+
+" Line numbering
+set number
+set ruler
+
+" Always show the sign column
+set signcolumn=yes
+
 " Hide rather than close files with unsaved changes when opening new files
 set hidden
 
@@ -64,16 +94,20 @@ set ignorecase
 set smartcase
 set incsearch
 
+" Enable the mouse
 set mouse=a
 
 set cmdheight=2
 
-set updatetime=300
-
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-set hidden
+" Always split to the right
+set splitright
+
+" Show the current in-progress command
+set showcmd
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Text Formatting                                                              "
@@ -86,18 +120,19 @@ set softtabstop=4
 
 " Automatically indent
 set autoindent
-set cindent
 set smartindent
 
-" Wrap long lines
-set wrap
-
+" Colour column + wrap long lines
 set cc=80
+set wrap
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Other                                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Optimisation
+set lazyredraw
+
 " Disable arrow keys to break bad habits
 map <Up>        <NOP>
 map <Down>      <NOP>
@@ -115,11 +150,28 @@ let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Coc Configuration                                                            "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:coc_global_extensions = [
+            \ 'coc-json',
+            \ 'coc-rust-analyzer',
+            \]
+
 " Use <c-space> to trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
 
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
+" Use tab for trigger completion with characters ahead and navigate
+inoremap <silent><expr> <TAB>
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to format
+" on enter
 inoremap <silent><expr> <cr> pumvisible()
             \? coc#_select_confirm()
             \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
@@ -137,10 +189,12 @@ nmap <silent> gr <Plug>(coc-references)
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
-    if (index([‘vim’,’help’], &filetype) >= 0)
-        execute ‘h ‘.expand(‘<cword>’)
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
     else
-        call CocAction(‘doHover’)
+        execute '!' . &keywordprg . " " . expand('<cword>')
     endif
 endfunction
 
@@ -150,9 +204,10 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Symbol renaming
 nmap <leader>rn <Plug>(coc-rename)
 
-" Formatting selected code
-xmap <leader>f <Plug>(coc-format-selected)
-nmap <leader>f <Plug>(coc-format-selected)
+" Apply codeAction to the current line
+nmap <leader>ac <Plug>(coc-codeaction-line)
+" Autofix problem on the current line
+nmap <leader>af <Plug>(coc-fix-current)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups
 if has('nvim-0.4.0') || has('patch-8.2.0750')
@@ -184,30 +239,42 @@ endif
 " Other Plugin Configuration                                                   "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline
+let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail_improved'
-let g:airline_powerline_fonts=1
 
-" Ale
-highlight clear ALEErrorSign
-highlight clear ALEWarningSign
-let g:ale_sign_error='❌'
-let g:ale_sign_warning='⚠'
-let g:ale_lint_on_enter=1
-let g:ale_lint_on_text_changed='never'
-let g:ale_echo_msg_format='[%linter%] %s [%severity%]'
-let g:ale_linters={
-\   'python': ['flake8'],
-\   'cpp': ['clang'],
-\}
-
-" IndentLine
-let g:indentLine_char='┆'
+" FZF
+let g:fzf_nvim_statusline=0
+nnoremap <silent> <leader><space> :GFiles<CR>
+nnoremap <silent> <leader>f :Files<CR>
+nnoremap <silent> <leader>rg :Rg<CR>
+nnoremap <silent> <leader>b :Buffers<CR>
+nnoremap <silent> <leader>h :History<CR>
+nnoremap <silent> <leader>t :BTags<CR>
+nnoremap <silent> <leader>T :Tags<CR>
 
 " Golang
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 let g:go_def_mapping_enabled=0
 let g:go_fmt_command='goimports'
-let g:go_auto_type_info = 1
+let g:go_auto_type_info=1
 let g:go_code_completion_enabled=0
+
+" Goyo / Limelight
+let g:goyo_width=120
+nnoremap <silent> <leader>go :Goyo<CR>
+nnoremap <silent> <leader>ll :Limelight!!<CR>
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" IndentLine
+let g:indentLine_char='│'
+
+" Markdown
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_conceal=0
+let g:vim_markdown_frontmatter=1
+let g:vim_markdown_toml_frontmatter=1
+let g:vim_markdown_json_frontmatter=1
+nnoremap <silent> <leader>mp :MarkdownPreview<CR>
