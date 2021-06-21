@@ -8,9 +8,10 @@ else
 endif
 
 " UI
-Plug 'dracula/vim'
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
+Plug 'ntpeters/vim-better-whitespace'
 
 " Session saving (for tmux)
 Plug 'tpope/vim-obsession'
@@ -20,11 +21,13 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " VCS
+Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 " Editing
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
+Plug 'machakann/vim-highlightedyank'
 
 " Code completion
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -36,6 +39,7 @@ Plug 'junegunn/limelight.vim'
 " Markdown
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
+Plug 'iamcco/mathjax-support-for-mkdp'
 Plug 'iamcco/markdown-preview.nvim', {
             \ 'do': { -> mkdp#util#install() },
             \ 'for': ['markdown', 'vim-plug']
@@ -43,7 +47,7 @@ Plug 'iamcco/markdown-preview.nvim', {
 
 " Languages
 Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
-Plug 'rust-lang/rust.vim'
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
@@ -53,6 +57,10 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set encoding=utf-8
 set fileencoding=utf-8
+set fileencodings=utf-8
+set bomb
+set binary
+set fileformats=unix,dos,mac
 
 " Disable creation of backup/swap files
 set nobackup
@@ -74,7 +82,8 @@ set updatetime=300
 " Colors
 syntax on
 set termguicolors
-colorscheme dracula
+colorscheme gruvbox
+let g:gruvbox_contrast_dark='medium'
 
 " Highlight the current line
 set cursorline
@@ -152,7 +161,6 @@ let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:coc_global_extensions = [
             \ 'coc-json',
-            \ 'coc-rust-analyzer',
             \]
 
 " Use <c-space> to trigger completion
@@ -236,7 +244,7 @@ endif
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Other Plugin Configuration                                                   "
+" Plugin Configuration                                                         "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Airline
 let g:airline_powerline_fonts=1
@@ -251,7 +259,7 @@ nnoremap <silent> <leader>rg :Rg<CR>
 nnoremap <silent> <leader>b :Buffers<CR>
 nnoremap <silent> <leader>h :History<CR>
 nnoremap <silent> <leader>t :BTags<CR>
-nnoremap <silent> <leader>T :Tags<CR>
+nnoremap <silent> <leader>at :Tags<CR>
 
 " Golang
 let g:go_def_mode='gopls'
@@ -268,8 +276,12 @@ nnoremap <silent> <leader>ll :Limelight!!<CR>
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
+" Highlighted yank
+let g:highlightedyank_highlight_duration=350
+
 " IndentLine
 let g:indentLine_char='│'
+let g:indentLine_faster=1
 
 " Markdown
 let g:vim_markdown_folding_disabled=1
@@ -278,3 +290,4 @@ let g:vim_markdown_frontmatter=1
 let g:vim_markdown_toml_frontmatter=1
 let g:vim_markdown_json_frontmatter=1
 nnoremap <silent> <leader>mp :MarkdownPreview<CR>
+
