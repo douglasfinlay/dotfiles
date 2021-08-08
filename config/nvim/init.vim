@@ -1,36 +1,36 @@
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugins                                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('win32')
-    call plug#begin('~/AppData/Local/nvim/plugged')
-else
-    call plug#begin('~/.local/share/nvim/plugged')
-endif
+call plug#begin(stdpath('data') . '/plugged')
 
 " UI
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'sheerun/vim-polyglot'
 
 " Session saving (for tmux)
 Plug 'tpope/vim-obsession'
 
-" Fuzzy finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 
 " VCS
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 
 " Editing
+Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
-Plug 'machakann/vim-highlightedyank'
 
-" Code completion
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Distraction-free editing
 Plug 'junegunn/goyo.vim'
@@ -47,7 +47,7 @@ Plug 'iamcco/markdown-preview.nvim', {
 
 " Languages
 Plug 'fatih/vim-go', { 'do': 'GoUpdateBinaries' }
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 
@@ -55,7 +55,16 @@ call plug#end()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General                                                                      "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set encoding=utf-8
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_invert_selection='1'
+let g:gruvbox_italic='1'
+let g:gruvbox_sign_column='bg0'
+colorscheme gruvbox
+set background=dark
+set termguicolors
+
+let mapleader=' '
+
 set fileencoding=utf-8
 set fileencodings=utf-8
 set bomb
@@ -67,30 +76,22 @@ set nobackup
 set noswapfile
 set nowritebackup
 
+set undodir=~/.vim/undodir
+set undofile
+
 " Automatically read changes to files
 set autoread
 
-" Set the leader to <space>
-let mapleader=' '
+set noerrorbells
+set guicursor=
+set cmdheight=2
+set noshowmode
 
-set updatetime=300
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" User Interface                                                               "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Colors
-syntax on
-set termguicolors
-colorscheme gruvbox
-let g:gruvbox_contrast_dark='medium'
-
-" Highlight the current line
-set cursorline
-
-" Line numbering
+" Relative line numbers
 set number
-set ruler
+set relativenumber
+
+set scrolloff=5
 
 " Always show the sign column
 set signcolumn=yes
@@ -99,50 +100,32 @@ set signcolumn=yes
 set hidden
 
 " Searching
-set ignorecase
-set smartcase
 set incsearch
-
-" Enable the mouse
-set mouse=a
-
-set cmdheight=2
-
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+set nohlsearch
 
 " Always split to the right
 set splitright
 
-" Show the current in-progress command
-set showcmd
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Text Formatting                                                              "
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Indentation
 set expandtab
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
-
-" Automatically indent
 set autoindent
 set smartindent
 
 " Colour column + wrap long lines
 set cc=80
-set wrap
+set nowrap
+
+set lazyredraw
+set updatetime=300
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Other                                                                        "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Optimisation
-set lazyredraw
-
-" Disable arrow keys to break bad habits
+" Disable arrow keys to break bad habits!
 map <Up>        <NOP>
 map <Down>      <NOP>
 map <Left>      <NOP>
@@ -152,95 +135,49 @@ imap <Down>     <NOP>
 imap <Left>     <NOP>
 imap <Right>    <NOP>
 
+" Yank from cursor to end of line excluding carriage return
+nnoremap Y yg_
+
+" Keep search results centered
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+
+" Preserve cursor position when joining lines
+nnoremap J mzJ`z
+nnoremap gJ mzgJ`z
+
+" Swap lines
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+inoremap <C-j> <ESC>:m .+1<CR>==
+inoremap <C-k> <ESC>:m .-2<CR>==
+nnoremap <leader>j :m .+1<CR>==
+nnoremap <leader>k :m .-2<CR>==
+
+nnoremap <silent> <leader>bd :bd<CR>
+nnoremap <silent> <leader>bn :bn<CR>
+nnoremap <silent> <leader>bp :bp<CR>
+
 let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Coc Configuration                                                            "
+" LSP                                                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:coc_global_extensions = [
-            \ 'coc-json',
-            \]
+lua require('lsp-config')
 
-" Use <c-space> to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
+set completeopt=menuone,noinsert,noselect
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 
-" Use tab for trigger completion with characters ahead and navigate
-inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to format
-" on enter
-inoremap <silent><expr> <cr> pumvisible()
-            \? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Goto code navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    elseif (coc#rpc#ready())
-        call CocActionAsync('doHover')
-    else
-        execute '!' . &keywordprg . " " . expand('<cword>')
-    endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming
-nmap <leader>rn <Plug>(coc-rename)
-
-" Apply codeAction to the current line
-nmap <leader>ac <Plug>(coc-codeaction-line)
-" Autofix problem on the current line
-nmap <leader>af <Plug>(coc-fix-current)
-
-" Remap <C-f> and <C-b> for scroll float windows/popups
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll()
-                \? coc#float#scroll(1) : "\<C-f>"
-    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll()
-                \? coc#float#scroll(0) : "\<C-b>"
-    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll()
-                \? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll()
-                \? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll()
-                \? coc#float#scroll(1) : "\<C-f>"
-    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll()
-                \? coc#float#scroll(0) : "\<C-b>"
-endif
-
-" NeoVim-only mapping for visual mode scroll
-" Useful on signatureHelp after jump placeholder of snippet expansion
-if has('nvim')
-    vnoremap <nowait><expr> <C-f> coc#float#has_scroll()
-                \? coc#float#nvim_scroll(1, 1) : "\<C-f>"
-    vnoremap <nowait><expr> <C-b> coc#float#has_scroll()
-                \? coc#float#nvim_scroll(0, 1) : "\<C-b>"
-endif
+" <Tab> and <S-Tab> to cycle through completion options
+inoremap <expr> <Tab>   pumvisible() ? '<C-n>' : '<Tab>'
+inoremap <expr> <S-Tab> pumvisible() ? '<C-p>' : '<S-Tab>'
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -251,15 +188,15 @@ let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled=1
 let g:airline#extensions#tabline#formatter='unique_tail_improved'
 
-" FZF
-let g:fzf_nvim_statusline=0
-nnoremap <silent> <leader><space> :GFiles<CR>
-nnoremap <silent> <leader>f :Files<CR>
-nnoremap <silent> <leader>rg :Rg<CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>h :History<CR>
-nnoremap <silent> <leader>t :BTags<CR>
-nnoremap <silent> <leader>at :Tags<CR>
+" Telescope
+nnoremap <silent> <leader><space> <cmd>Telescope git_files<CR>
+nnoremap <silent> <leader>f <cmd>Telescope find_files<CR>
+nnoremap <silent> <leader>gr <cmd>Telescope live_grep<CR>
+nnoremap <silent> <leader>bu <cmd>Telescope buffers<CR>
+nnoremap <silent> <leader>hi <cmd>Telescope oldfiles<CR>
+nnoremap <silent> <leader>he <cmd>Telescope help_tags<CR>
+nnoremap <silent> <leader>t <cmd>Telescope current_buffer_tags<CR>
+nnoremap <silent> <leader>at <cmd>Telescope tags<CR>
 
 " Golang
 let g:go_def_mode='gopls'
@@ -275,9 +212,6 @@ nnoremap <silent> <leader>go :Goyo<CR>
 nnoremap <silent> <leader>ll :Limelight!!<CR>
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
-
-" Highlighted yank
-let g:highlightedyank_highlight_duration=350
 
 " IndentLine
 let g:indentLine_char='│'
