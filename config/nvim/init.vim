@@ -9,6 +9,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'sheerun/vim-polyglot'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " Session saving (for tmux)
 Plug 'tpope/vim-obsession'
