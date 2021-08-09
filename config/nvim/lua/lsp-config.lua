@@ -37,6 +37,9 @@ local servers = {'pylsp', 'gopls'}
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup {
         on_attach = on_attach,
+        flags = {
+            debounce_text_changes = 500,
+        },
     }
 end
 

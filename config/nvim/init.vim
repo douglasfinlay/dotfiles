@@ -8,7 +8,6 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'Yggdroot/indentLine'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'sheerun/vim-polyglot'
 Plug 'kyazdani42/nvim-web-devicons'
 
 " Session saving (for tmux)
@@ -169,6 +168,7 @@ let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 " LSP                                                                          "
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua require('lsp-config')
+lua require('treesitter')
 
 set completeopt=menuone,noinsert,noselect
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
