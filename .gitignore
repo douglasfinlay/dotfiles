@@ -1,3 +1,4 @@
-vim/.netrwhist
-vim/vim
+.DS_Store
+
+config/nvim/plugin/packer_compiled.lua
 conky/conky
