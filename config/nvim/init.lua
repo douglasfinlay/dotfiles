@@ -19,38 +19,18 @@ end
 
 local packer_bootstrap = ensure_packer()
 
-require('config.packer')
+require('config.plugins')
 
 if packer_bootstrap then
     require('packer').sync()
 end
 
 require('impatient')
+require('config.options')
+require('config.keymap')
 
-local set = vim.opt
 local cmd = vim.cmd
 local o = vim.o
-local map = vim.api.nvim_set_keymap
-
--- general
-set.encoding = 'utf-8'
-set.fileencoding = 'utf-8'
-set.fileencodings = 'utf-8'
-set.bomb = true
-set.binary = true
-set.fileformats = 'unix,dos,mac'
-
--- disable creation of backup/swap files
-set.backup = false
-set.swapfile = false
-set.writebackup = false
-
--- automatically read changes to files
-set.autoread = true
-
--- set the leader to <space>
-map('n', '<Space>', '', {})
-vim.g.mapleader = ' '
 
 -- ui
 o.guifont = 'Iosevka Nerd Font:h15'
@@ -59,78 +39,9 @@ o.guifont = 'Iosevka Nerd Font:h15'
 o.termguicolors = true
 cmd[[colorscheme catppuccin-macchiato]]
 
--- highlight the current line
-set.cursorline = true
-
--- line numbering
-set.number = true
-set.relativenumber = true
-
-set.ruler = true
-
--- always show the sign column
-set.signcolumn = 'yes'
-
--- hide rather than close files with unsaved changes when opening new files
-set.hidden = true
-
--- searching
-set.ignorecase = true
-set.smartcase = true
-set.incsearch = true
-
--- enable the mouse
-set.mouse = 'a'
-
--- always split to the right
-set.splitright = true
-
--- show the current in-progress command
-set.showcmd = true
-
--- text formatting
--- indentation
-set.expandtab = true
-set.tabstop = 4
-set.shiftwidth = 4
-set.softtabstop = 4
-
--- automatically indent
-set.autoindent = true
-set.smartindent = true
-
--- colour column + wrap long lines
-set.cc = [[80]]
-set.wrap = true
-
--- autocompletion / LSP
-set.completeopt = {'menuone', 'noselect', 'noinsert'}
-set.shortmess = set.shortmess + { c = true}
-vim.api.nvim_set_option('updatetime', 300)
--- fixed column for diagnostics to appear
 vim.cmd([[
-set signcolumn=yes
 autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
 ]])
-
--- other
--- optimisation
-set.lazyredraw = true
-
-vim.keymap.set('n', '<leader>xx', '<cmd>TroubleToggle<cr>', {silent = true, noremap = true, desc = 'Toggle problem explorer'})
-
--- telescope
-local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find files' })
-vim.keymap.set('n', '<leader><space>', builtin.git_files, { desc = 'Repository files' })
-vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live grep' })
-vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Buffers' })
-vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Help tags' })
-
-vim.keymap.set('n', '<leader>gc', builtin.git_commits, { desc = 'Git commits' })
-vim.keymap.set('n', '<leader>gs', builtin.git_status, { desc = 'Git status' })
-
-vim.keymap.set('n', '<leader>t', '<cmd>NvimTreeToggle<cr>', {silent = true, noremap = true})
 
 -- LSP Diagnostics Options Setup 
 local sign = function(opts)
@@ -213,22 +124,19 @@ cmp.setup({
     },
 })
 
-vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', { desc = 'Rename identifier under cursor' })
-vim.keymap.set('n', '<leader>fo', '<cmd>lua vim.lsp.buf.format()<cr>', { desc = 'Format entire file' })
-
 require("transparent").setup({
-  enable = true, -- boolean: enable transparent
-  extra_groups = { -- table/string: additional groups that should be cleared
-    -- In particular, when you set it to 'all', that means all available groups
+    enable = true, -- boolean: enable transparent
+    extra_groups = { -- table/string: additional groups that should be cleared
+        -- In particular, when you set it to 'all', that means all available groups
 
-    -- example of akinsho/nvim-bufferline.lua
-    "BufferLineTabClose",
-    "BufferlineBufferSelected",
-    "BufferLineFill",
-    "BufferLineBackground",
-    "BufferLineSeparator",
-    "BufferLineIndicatorSelected",
-  },
-  exclude = {}, -- table: groups you don't want to clear
-  ignore_linked_group = true, -- boolean: don't clear a group that links to another group
+        -- example of akinsho/nvim-bufferline.lua
+        "BufferLineTabClose",
+        "BufferlineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        "BufferLineSeparator",
+        "BufferLineIndicatorSelected",
+    },
+    exclude = {}, -- table: groups you don't want to clear
+    ignore_linked_group = true, -- boolean: don't clear a group that links to another group
 })

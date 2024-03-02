@@ -16,13 +16,15 @@ local plugins = packer.startup(function(use)
         }
     }
 
-    use 'hrsh7th/nvim-cmp' 
-    use 'hrsh7th/cmp-nvim-lsp'
-    use 'hrsh7th/cmp-nvim-lua'
-    use 'hrsh7th/cmp-nvim-lsp-signature-help'
-    use 'hrsh7th/cmp-vsnip'                             
-    use 'hrsh7th/cmp-path'                              
     use 'hrsh7th/cmp-buffer'                            
+    use 'hrsh7th/cmp-cmdline'                            
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-nvim-lsp-signature-help'
+    use 'hrsh7th/cmp-nvim-lua'
+    use 'hrsh7th/cmp-path'                              
+    use 'hrsh7th/nvim-cmp' 
+
+    use 'hrsh7th/cmp-vsnip'                             
     use 'hrsh7th/vim-vsnip'
 
     use 'neovim/nvim-lspconfig' 
@@ -101,6 +103,7 @@ require('nvim-tree').setup()
 require('mason').setup()
 require('mason-lspconfig').setup({
     ensure_installed = {
+        'clangd',
         'eslint',
         'rust_analyzer',
         'tsserver',
