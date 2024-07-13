@@ -1,6 +1,6 @@
 local set = vim.opt
 
--- generalocal set = vim.opt
+-- general
 set.encoding = 'utf-8'
 set.fileencoding = 'utf-8'
 set.fileencodings = 'utf-8'
@@ -65,14 +65,8 @@ set.smartindent = true
 set.cc = [[80]]
 set.wrap = true
 
--- autocompletion / LSP
-set.completeopt = {'menuone', 'noselect', 'noinsert'}
-set.shortmess = set.shortmess + { c = true}
-set.updatetime = 300
-
 -- optimisation
 set.lazyredraw = true
 
 -- fixed column for diagnostics to appear
-set.signcolumn = yes
-
+set.signcolumn = 'yes'
