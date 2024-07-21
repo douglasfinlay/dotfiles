@@ -65,8 +65,5 @@ set.smartindent = true
 set.cc = [[80]]
 set.wrap = true
 
--- optimisation
-set.lazyredraw = true
-
 -- fixed column for diagnostics to appear
 set.signcolumn = 'yes'

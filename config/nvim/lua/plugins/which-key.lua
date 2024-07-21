@@ -13,6 +13,12 @@ return {
             { '<leader>h', group = 'Git hunks' },
             { '<leader>r', group = 'LSP' },
             { '<leader>x', group = 'Diagnostics' },
+
+            { '<leader>v', group = 'Neovim' },
+            { '<leader>vm', vim.cmd.messages, desc = 'Messages' },
+            { '<leader>vp', '<cmd>Lazy<CR>', desc = 'Plugins (lazy.nvim)' },
+            { '<leader>vP', '<cmd>Mason<CR>', desc = 'Packages (Mason)' },
+            { '<leader>vl', '<cmd>LspInfo<CR>', desc = 'LSP Info' },
         })
     end,
     opts = {
