@@ -1,5 +1,9 @@
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+export VISUAL="nvim"
+export EDITOR="$VISUAL"
+export SUDO_EDITOR="$VISUAL"
 
-export VISUAL=/usr/bin/vim
-export EDITOR=/usr/bin/vim
-export SUDO_EDITOR=/usr/bin/rvim
+[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# Machine-specific config
+[ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"
+
