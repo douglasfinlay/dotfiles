@@ -1,10 +1,41 @@
 [user]
 	name = Douglas Finlay
-	email = douglas@douglasfinlay.com
+
+[core]
+    autocrlf = input
+
+[color]
+    ui = auto
+    move = dimmed
+
 [init]
 	defaultBranch = main
+
 [filter "lfs"]
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+
+[pull]
+	rebase = true
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+
+[merge]
+	conflictStyle = zdiff3
+
+[commit]
+	verbose = true
+
+[diff]
+	algorithm = histogram
+	colorMoved = default
+
+[branch]
+	sort = -committerdate
+
+[include]
+    path = ~/.gitconfig.local
