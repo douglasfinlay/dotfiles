@@ -26,7 +26,7 @@ return {
                 'lua_ls',
                 'rust_analyzer',
                 'spectral', -- JSON/YAML + OpenAPI
-                'tsserver',
+                'ts_ls',
             },
         })
     end,

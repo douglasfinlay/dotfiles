@@ -8,4 +8,7 @@ o.scrolloff = 3
 
 require('config.options')
 require('config.lazy')
-require('config.neovide')
+
+if vim.g.neovide then
+    require('config.neovide')
+end
