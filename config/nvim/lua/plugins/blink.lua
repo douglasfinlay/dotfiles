@@ -1,10 +1,6 @@
 return {
     'saghen/blink.cmp',
     version = '1.*',
-    dependencies = {
-        { 'L3MON4D3/LuaSnip', version = 'v2.*', build = 'make install_jsregexp' },
-        'rafamadriz/friendly-snippets',
-    },
     opts = {
         keymap = {
             preset = 'default',
@@ -12,9 +8,8 @@ return {
             ['<C-j>'] = { 'select_next', 'fallback' },
             ['<CR>'] = { 'accept', 'fallback' },
         },
-        snippets = { preset = 'luasnip' },
         sources = {
-            default = { 'lazydev', 'lsp', 'path', 'snippets', 'buffer' },
+            default = { 'lazydev', 'lsp', 'path', 'buffer' },
             providers = {
                 lazydev = {
                     name = 'LazyDev',
