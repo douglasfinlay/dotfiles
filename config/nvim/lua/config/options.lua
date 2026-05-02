@@ -65,5 +65,3 @@ set.smartindent = true
 set.cc = [[80]]
 set.wrap = true
 
--- fixed column for diagnostics to appear
-set.signcolumn = 'yes'
