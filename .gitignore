@@ -1,4 +1,5 @@
 .DS_Store
 
 config/nvim/plugin/packer_compiled.lua
+config/wezterm/wezterm.local.lua
 conky/conky

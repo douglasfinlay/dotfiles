@@ -85,6 +85,7 @@ link zshrc          .zshrc
 
 link config/nvim    .config/nvim
 link config/tmux    .config/tmux
+link config/wezterm .config/wezterm
 
 print_summary
 check_required_tools
