@@ -67,10 +67,20 @@ config.keys = {
 
     { key = "\\", mods = "LEADER", action = act.SplitHorizontal { domain = "CurrentPaneDomain" } },
     { key = "-",  mods = "LEADER", action = act.SplitVertical { domain = "CurrentPaneDomain" } },
-    { key = "p",  mods = "LEADER", action = act.ShowLauncherArgs { flags = "FUZZY|LAUNCH_MENU_ITEMS" } },
     { key = "z",  mods = "LEADER", action = act.TogglePaneZoomState },
     { key = "f",  mods = "LEADER", action = act.ActivateKeyTable { name = "resize_font", one_shot = false } },
     { key = "r",  mods = "LEADER", action = act.ActivateKeyTable { name = "resize_pane", one_shot = false } },
+
+    { key = "p",  mods = "LEADER", action = act.ShowLauncherArgs { flags = "FUZZY|LAUNCH_MENU_ITEMS" } },
+    { key = "s",  mods = "LEADER", action = act.ShowLauncherArgs { flags = "FUZZY|WORKSPACES" } },
+    { key = "n",  mods = "LEADER", action = act.PromptInputLine {
+        description = "Workspace name:",
+        action = wezterm.action_callback(function(window, pane, line)
+            if line then
+                window:perform_action(act.SwitchToWorkspace { name = line }, pane)
+            end
+        end),
+    }},
 }
 
 config.key_tables = {
@@ -99,13 +109,19 @@ local mode_labels = {
     resize_font = "RESIZE FONT",
 }
 
-wezterm.on("update-status", function(window)
+wezterm.on("update-status", function(window, pane)
     local name = window:active_key_table()
     window:set_right_status(name and wezterm.format {
         { Attribute = { Intensity = "Bold" } },
         { Foreground = { AnsiColor = "Olive" } },
         { Text = " === " .. (mode_labels[name] or name) .. " === " },
     } or "")
+
+    local workspace = window:active_workspace()
+    window:set_left_status(wezterm.format {
+        { Foreground = { AnsiColor = "Teal" } },
+        { Text = " " .. workspace .. " " },
+    })
 end)
 
 -- Load local config
